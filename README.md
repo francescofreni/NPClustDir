@@ -1,6 +1,6 @@
 # Nonparametric Clustering for the Efficient Separation of $\gamma$-Ray Sources from Diffuse Background
 
-This repository contains the code for the conference paper *Efficient Disentangling of $\gamma$-Ray Sources from Diffuse Background in the Sky Map*, presented at the 14th Scientific Meeting of the Classification and Data Analysis Group (CLADAG) of the Italian Statistical Society (SIS) in Salerno, Italy, on September 11-13, 2023. You can find the short paper [here](https://it.pearson.com/content/dam/region-core/italy/pearson-italy/pdf/Docenti/Universit%C3%A0/CLADAG-2023.pdf).
+This repository contains the code for the conference paper *Efficient Disentangling of &#947;-Ray Sources from Diffuse Background in the Sky Map*, presented at the 14th Scientific Meeting of the Classification and Data Analysis Group (CLADAG) of the Italian Statistical Society (SIS) in Salerno, Italy, on September 11-13, 2023. You can find the short paper [here](https://it.pearson.com/content/dam/region-core/italy/pearson-italy/pdf/Docenti/Universit%C3%A0/CLADAG-2023.pdf).
 
 ## Contributors
 - Francesco Freni
