@@ -13,7 +13,7 @@ Density is estimated nonparametrically via binned directional kernel methods. Th
 ## Getting Started
 To get started with the project, clone the repository by running the following command:
 ```bash
-git clone [git@github.com:francescofreni/nldg.git](https://github.com/francescofreni/fermi-clust.git)
+git clone https://github.com/francescofreni/fermi-clust.git
 cd fermi-clust
 ```
 
