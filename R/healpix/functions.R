@@ -1,37 +1,5 @@
-cart2gal <- function(xcart)
-{
-  r2d=180/pi
-  l<-atan2(xcart[,2],xcart[,1])*r2d
-  l[l<0.]<-l[l<0.]+360 # if the value are negative sum 2pi
-  b <-atan2(xcart[,3], sqrt(xcart[,1]^2+xcart[,2]^2))*r2d
-  return (cbind(l,b))
-}
-
-
-gal2cart <- function(xgal){
-  xrad <- xgal*pi/180
-  l <- xrad[,1]
-  b <- xrad[,2]
-  x<-cos(l)*cos(b)
-  y<-sin(l)*cos(b)
-  z<-sin(b)
-  cbind(x,y,z)
-}
-
-
-pol2cart <- function(xpol) {
-  theta <- xpol[,1]
-  phi <- xpol[,2]
-  x <- cos(theta)
-  y <- sin(theta) * cos(phi)
-  z <- sin(theta) * sin(phi)
-  return(cbind(x,y,z))
-}
-
-
-# @param data data set di punti che si vogliono localizzare
-# @param j indica la dimensione della griglia (nside = 2^j)
-# @return vettore di lunghezza pari al numero di punti e con 
+# @param data data set of points to locate
+# @param j indicates the grid size (nside = 2^j)
 localize <- function(data, j) {
   loc <- sapply(1:nrow(data), function(i) {
     cell <- nestSearch(target = data[i,], nside = 2^(j+1))
@@ -41,13 +9,13 @@ localize <- function(data, j) {
 }
 
 
-# Dato l'indice di un pixel e j (dimensione griglia), trova i pixel adiacenti
-# av.pix (available pixels) indica i pixel contenuti nella griglia, perché 
-# si potrebbe avere una sottogriglia piuttosto che una griglia
+# Given the index of a pixel and j (grid size), find the adjacent pixels
+# av.pix (available pixels) indicates the pixels contained in the grid, because
+# you might have a subgrid rather than a full grid
 nb <- function(p, j, av.pix) {
   neig <- as.integer(neighbours(p, j))
   if ( length(neig) == 9 ) {
-    poss.neig <- neig[c(2,4,6,8)] # possibili vicini
+    poss.neig <- neig[c(2,4,6,8)]
     poss.neig <- poss.neig[poss.neig %in% av.pix]
     return(poss.neig)
   } else {
@@ -67,12 +35,6 @@ nb <- function(p, j, av.pix) {
 }
 
 
-# Data una finestra in input (volendo potrebbe essere anche l'intera sfera) che
-# contiene anche l'informazione relativa all'indice dei pixel, le osservazioni
-# e la dimensione della griglia, ritorna: i centri della griglia considera;
-# la lista contentente, per ogni cella, i suoi vicini; per ogni osservazione 
-# la cella (indice del pixel) in cui essa è contenuta; un vettore contenente,
-# per ogni cella, il numero di osservazioni che cadono in quella cella
 comp.centr.wei <- function(data, win, j) {
   loc <- localize(data, j)
   ns <- 2^j
@@ -92,7 +54,7 @@ comp.centr.wei <- function(data, win, j) {
 }
 
 
-# stima kernel binned con parametro di lisciamento variabile
+# Binned kernel density estimate with variable bandwidth
 vmf.bskde.2 = function (x, h, n, y=x){
   N <- sum(n)
   d = tcrossprod(y, x)*(1/h^2)
@@ -102,7 +64,6 @@ vmf.bskde.2 = function (x, h, n, y=x){
 }
 
 
-# Modifico opportunamente la funzione pdfCluster
 setClass("pdfCluster.healpix", 
          representation(call="call", x="matrix", pdf="vector", 
                         nc="list",  graph= "list", cluster.cores="ANY", 

@@ -9,6 +9,7 @@ library(tidyverse)
 library(clue)
 library(ks)
 library(Directional)
+source('utils.R')
 source('functions.R')
 
 
@@ -387,4 +388,3 @@ med(grstim.128.70.copy, gr.subsec.70)
 table(grstim.128.70.copy, gr.subsec.70)
 cl.128.70.copy[dens_diff <= 0] <- 0
 tpr_fpr(cl.128.70.copy, id_subsec70)
-
