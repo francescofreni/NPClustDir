@@ -7,7 +7,7 @@ This repository contains the code for the conference paper *Efficient Disentangl
 - Giovanna Menardi
 
 ## Abstract
-Searching for as yet undetected $\gamma-$ray sources is a major target of the Fermi LAT Collaboration. We address the problem by clustering the directions of the high-energy photon emissions detected by the telescope onboard the Fermi spacecraft. Putative sources are identified as the excess mass of disconnected high density regions on a sphere mesh, which allows for their joint discrimination from the diffuse $\gamma-$ray background spreading over the entire area.
+Searching for as yet undetected &#947;-ray sources is a major target of the Fermi LAT Collaboration. We address the problem by clustering the directions of the high-energy photon emissions detected by the telescope onboard the Fermi spacecraft. Putative sources are identified as the excess mass of disconnected high density regions on a sphere mesh, which allows for their joint discrimination from the diffuse &#947;-ray background spreading over the entire area.
 Density is estimated nonparametrically via binned directional kernel methods. The identification is accomplished by breaking the problem into independent subregions of the sphere separated by empty bins, thus leading to a remarkable gain in efficiency.
 
 ## Getting Started
