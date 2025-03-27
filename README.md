@@ -1,4 +1,4 @@
-# Nonparametric Clustering for the Efficient Separation of $\gamma$-Ray Sources from Diffuse Background
+# Nonparametric Clustering for Directional Data
 
 This repository contains the code for the conference paper *Efficient Disentangling of &#947;-Ray Sources from Diffuse Background in the Sky Map*, presented at the 14th Scientific Meeting of the Classification and Data Analysis Group (CLADAG) of the Italian Statistical Society (SIS) in Salerno, Italy, on September 11-13, 2023. You can find the short paper [here](https://it.pearson.com/content/dam/region-core/italy/pearson-italy/pdf/Docenti/Universit%C3%A0/CLADAG-2023.pdf).
 
@@ -17,13 +17,9 @@ git clone https://github.com/francescofreni/fermi-clust.git
 cd fermi-clust
 ```
 
-## Data
-The dataset used for this analysis is stored in a large `.RData` file. If needed, please send an email to ffreni@student.ethz.ch.
-
 ## Usage
 The scripts are organized as follows:
 
-- **`R/`**: Contains all the R scripts used for the main analysis and simulations.
+- **`R/`**: Contains all the R scripts, including function definitions and a simple example.
 - **`R/healpix/`**: Includes adaptations of the functions to work with the HEALPix pixelization.
-
 
