@@ -35,7 +35,120 @@ setClass("pdfCluster2", representation(call="call", x="matrix", pdf="vector",
                                        tree="dendrogram", noc="numeric", obs.cluster='vector'))
 
 
-# original, variable bandwidth
+# fixed bandwidth
+pdfCluster.data.2 <- function(x, mesh, h, 
+                              n.grid=min(round((5 + sqrt(dim(mesh@faces)[1]))*4), dim(mesh@faces)[1]),
+                              ... )
+  # n.grid defines the length of the grid on which evaluating the connected
+  # components of the density level sets.
+{
+  call <- match.call()
+  x <- data.matrix(x)
+  if(any(sapply(x[1,],is.factor))) stop("All variables must be numeric")
+  if(any(apply(x,2, pdfCluster:::check.discrete)<10)) 
+    warning("One or more variables look to be discrete: pdfCluster is designed for continuous data")
+  if(any(is.na(x))) 
+  {warning(cat("NA in object",deparse(substitute(x)), "have been omitted", "\n"));  x <- na.omit(x)}
+  
+  # compute the elements to be used for both density estimation and connected components
+  l <- comp.centr.wei.ico(x, mesh)
+  t <- l$t
+  graph.nb <- l$adj # this is my graph
+  obs <- l$obs 
+  n <- l$n
+  
+  # density estimation
+  estimate <- do.call(vmf.bskde, list(x = t, h = h, n = n))
+  
+  # check given arguments
+  N <- nrow(t)
+  if (n.grid > N) {
+    warning("n.grid too large, set equal to N")
+    n.grid <- min(n.grid, nrow(t))
+  }
+  
+  # connected components
+  nc <- pdfCluster:::num.con(t, estimate, graph.nb,
+                             profile.grid = n.grid-2, correct=TRUE)  
+  struct <- pdfCluster:::con2tree(nc, estimate)
+  if (struct$bad) {
+    message("No output given")
+  }
+  else {
+    g <- struct$g
+    g[struct$g == 0] <- NA
+    pdf.estim <- estimate
+    names(l$adj) <- row.names(mesh@faces)
+    obs.cl <- sapply(1:dim(x)[1], function(i) g[which(names(l$adj) == obs[i])])
+    out <- new("pdfCluster2", call = call, x = data.matrix(x), 
+               pdf = pdf.estim,  nc = nc, graph = graph.nb, cluster.cores = g,
+               tree = struct$tree, noc = struct$noc, obs.cluster = obs.cl)
+    out
+  }
+}
+
+
+# variable bandwidth
+pdfCluster.data.2.new <- function(x, mesh, h, 
+                                  n.grid=min(round((5 + sqrt(dim(mesh@faces)[1]))*4), dim(mesh@faces)[1]),
+                                  ... )
+  # n.grid defines the length of the grid on which evaluating the connected
+  # components of the density level sets.
+{
+  call <- match.call()
+  x <- data.matrix(x)
+  if(any(sapply(x[1,],is.factor))) stop("All variables must be numeric")
+  if(any(apply(x,2, pdfCluster:::check.discrete)<10)) 
+    warning("One or more variables look to be discrete: pdfCluster is designed for continuous data")
+  if(any(is.na(x))) 
+  {warning(cat("NA in object",deparse(substitute(x)), "have been omitted", "\n"));  x <- na.omit(x)}
+  
+  # compute the elements to be used for both density estimation and connected components
+  l <- comp.centr.wei.ico(x, mesh)
+  t <- l$t
+  graph.nb <- l$adj # this is my graph
+  obs <- l$obs 
+  n <- l$n
+  
+  # density estimation
+  coarse_estimate <- do.call(vmf.bskde.2, list(x = t, h = h, n = n))
+  print(range(coarse_estimate))
+  #h_variable <- h/sqrt(coarse_estimate)
+  g <- exp(mean(log(coarse_estimate)))
+  h_variable <- h * (1/g * coarse_estimate)^(-0.5)
+  print(range(h_variable))
+  estimate <- do.call(vmf.bskde.2, list(x = t, h = as.vector(h_variable), n = n))
+  print(range(estimate))
+  
+  # check given arguments
+  N <- nrow(t)
+  if (n.grid > N) {
+    warning("n.grid too large, set equal to N")
+    n.grid <- min(n.grid, nrow(t))
+  }
+  
+  # connected components
+  nc <- pdfCluster:::num.con(t, estimate, graph.nb,
+                             profile.grid = n.grid-2, correct=TRUE)  
+  struct <- pdfCluster:::con2tree(nc, estimate)
+  if (struct$bad) {
+    message("No output given")
+  }
+  else {
+    g <- struct$g
+    g[struct$g == 0] <- NA
+    pdf.estim <- estimate
+    names(l$adj) <- row.names(mesh@faces)
+    obs.cl <- sapply(1:dim(x)[1], function(i) g[which(names(l$adj) == obs[i])])
+    out <- new("pdfCluster2", call = call, x = data.matrix(x), 
+               pdf = pdf.estim,  nc = nc, graph = graph.nb, cluster.cores = g,
+               tree = struct$tree, noc = struct$noc, obs.cluster = obs.cl)
+    out
+  }
+}
+
+
+# variable bandwidth for Fermi data
 pdfCluster.fermi <- function(
     x, mesh, h, 
     n.grid=min(round((5 + sqrt(dim(mesh@faces)[1]))*4), dim(mesh@faces)[1]), 
