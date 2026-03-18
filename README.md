@@ -1,14 +1,13 @@
 # Nonparametric Clustering for Directional Data
 
-This repository contains the code for the conference paper *Efficient Disentangling of &#947;-Ray Sources from Diffuse Background in the Sky Map*, presented at the 14th Scientific Meeting of the Classification and Data Analysis Group (CLADAG) of the Italian Statistical Society (SIS) in Salerno, Italy, on September 11-13, 2023. You can find the short paper [here](https://it.pearson.com/content/dam/region-core/italy/pearson-italy/pdf/Docenti/Universit%C3%A0/CLADAG-2023.pdf).
+This repository contains the code for the research paper [*Efficient Disentangling of &#947;-Ray Sources from Diffuse Background in the Sky Map*](https://www.sciencedirect.com/science/article/pii/S2590197426000200).
 
 ## Contributors
 - Francesco Freni
 - Giovanna Menardi
 
 ## Abstract
-Searching for as yet undetected &#947;-ray sources is a major target of the Fermi LAT Collaboration. We address the problem by clustering the directions of the high-energy photon emissions detected by the telescope onboard the Fermi spacecraft. Putative sources are identified as the excess mass of disconnected high density regions on a sphere mesh, which allows for their joint discrimination from the diffuse &#947;-ray background spreading over the entire area.
-Density is estimated nonparametrically via binned directional kernel methods. The identification is accomplished by breaking the problem into independent subregions of the sphere separated by empty bins, thus leading to a remarkable gain in efficiency.
+Searching for previously unknown &#947;-ray sources is a key objective of the Fermi LAT Collaboration. We address this challenge by clustering the directions of high-energy photon emissions detected by the Fermi spacecraft’s Large Area Telescope (LAT). Candidate sources are detected by analyzing the excess mass within discrete, high-density regions, allowing us to discriminate them from the diffuse &#947;-ray background that pervades the entire sky. Density estimation is performed nonparametrically using binned directional kernel methods applied to a sphere mesh. Source detection is facilitated by partitioning the problem into separate subregions of the sphere, delimited by empty bins, which results in a substantial gain in computational efficiency.
 
 ## Getting Started
 To get started with the project, clone the repository by running the following command:
